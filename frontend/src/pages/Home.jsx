@@ -23,7 +23,6 @@ import RequestForm from "../components/RequestForm.jsx";
 import { Link } from "@nextui-org/react";
 import { useForm, Controller } from "react-hook-form";
 import { Input } from "@nextui-org/react";
-
 export default function Home() {
   const [formData, setFormData] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
@@ -55,15 +54,15 @@ export default function Home() {
   const options = [
     {
       action: "create",
-      label: "创建/更新刷签请求",
+      label: t("home.option1"),
     },
     {
       action: "query",
-      label: "查询刷签状态",
+      label: t("home.option2"),
     },
     {
       action: "cancel",
-      label: "取消刷签&退款",
+      label: t("home.option3"),
     },
   ];
 
@@ -74,17 +73,17 @@ export default function Home() {
           <span
             className={`bg-gradient-to-br ${variant === "cgi" ? "from-sky-500 to-purple-600" : "from-blue-500 via-purple-500 to-gray-400"} bg-clip-text text-transparent`}
           >
-            {variant}
+            {variant}{" "}
           </span>
-          系统预约{" "}
+          {t("home.heading")}{" "}
           <span className="text-2xl underline decoration-fuchsia-700 decoration-2 underline-offset-8 md:text-3xl">
             {countryMap[country][3]}
           </span>
         </h1>
         <div className="space-y-1.5 text-center">
-          <p className="text-xl font-bold">自动抓取位置</p>
+          <p className="text-xl font-bold">{t("home.heading2")}</p>
           <p className="font text-lg text-foreground-500">
-            {variant === "cgi" ? "支持Chrome浏览器" : "预约成功实时邮件通知"}
+            {variant === "cgi" ? "支持Chrome浏览器" : t("home.heading3")}
           </p>
           {variant === "cgi" && (
             <Link href="https://usvisa-lol-1324851224.cos.ap-shanghai.myqcloud.com/usvisa.lol.zip">
@@ -94,7 +93,7 @@ export default function Home() {
         </div>
       </div>
       <div className="relative flex flex-col gap-y-8 py-12">
-        <h2 className="text-center text-3xl font-bold">开始使用</h2>
+        <h2 className="text-center text-3xl font-bold">{t("home.cta")}</h2>
         <Button
           className="absolute right-0 bg-background"
           disableAnimation
@@ -142,7 +141,9 @@ export default function Home() {
           >
             {activeTab === 0 && (
               <div className="flex flex-col items-center gap-y-6 py-6">
-                <p className="text-xl font-semibold">请从以下选项中选择</p>
+                <p className="text-xl font-semibold">
+                  {t("home.optionsTitle")}
+                </p>
                 <div
                   className={`grid grid-cols-1 gap-x-3 gap-y-3 lg:grid-cols-3`}
                 >
@@ -193,13 +194,12 @@ export default function Home() {
                 />
               ) : (
                 <div className="flex flex-col items-center gap-y-6 py-6">
-                  <p className="text-xl font-semibold">请确认以下内容</p>
-                  <p>提交后系统将会在24小时内自动完成退款</p>
-                  <p>
-                    退款后{variant === "cgi" ? "浏览器插件" : "刷签请求"}
-                    将即刻失效{variant === "ais" && "，如需再次使用请重新付款"}
+                  <p className="text-xl font-semibold">
+                    {t("home.refundOptionTitle")}
                   </p>
-                  <p>建议同步修改账户密码以保证信息安全</p>
+                  <p>{t("home.refundP1")}</p>
+                  <p>{t("home.refundP2")}</p>
+                  <p>{t("home.refundP3")}</p>
                   {variant === "ais" ? (
                     <form
                       onSubmit={handleSubmit(handleFormSubmit)}
@@ -227,7 +227,7 @@ export default function Home() {
                             className="w-full"
                             label="Schedule ID"
                             type="text"
-                            placeholder="不填默认为账户中全部申请人退款"
+                            placeholder={t("home.refundInput1")}
                             errorMessage={errors?.schedule_ids?.message}
                           />
                         )}
@@ -236,7 +236,7 @@ export default function Home() {
                         className="bg-foreground text-background"
                         type="submit"
                       >
-                        下一步
+                        {t("buttons.next")}
                       </Button>
                     </form>
                   ) : (
@@ -247,7 +247,7 @@ export default function Home() {
                         setActiveTab((prev) => prev + 1);
                       }}
                     >
-                      下一步
+                      {t("buttons.next")}
                     </Button>
                   )}
                 </div>
